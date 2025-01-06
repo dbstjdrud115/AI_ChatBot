@@ -1,6 +1,0 @@
-server:
-    port : 8040
-spring:
-    profiles:
-        active: dev
-        include : secret
