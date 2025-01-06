@@ -1,16 +1,7 @@
 package com.ll.chat_ai;
 
 
-import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
-
-@RequestMapping("/api/v1/chat")
+/*@RequestMapping("/api/v1/chat")
 @RestController
 public class ChatController {
 
@@ -20,6 +11,7 @@ public class ChatController {
         this.openAiChatModel = openAiChatModel;
     }
 
+    //챗봇 집어넣기. OpenAI 의존성 주입 및 GPT사용을 위한 KEY. 그리고 선결제 필요하다고 한다.
     @GetMapping("/ai")
     public Map<String, String> test(@RequestBody String msg){
         Map<String, String> response = new HashMap<>();
@@ -28,4 +20,4 @@ public class ChatController {
         System.out.println(openAiResponse);
         return response;
     }
-}
+}*/
