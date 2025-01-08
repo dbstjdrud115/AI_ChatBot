@@ -1,5 +1,6 @@
 package com.ll.chat_ai;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -9,15 +10,13 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    @Autowired // WebSocketHandler를 주입받음
+    private WebSocketHandler webSocketHandler;
+
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(WebSocketHandler(), "/ws/chat/{roomId}")
+        registry.addHandler(webSocketHandler, "/ws/chat/{roomId}") // 주입받은 핸들러 사용
                 .setAllowedOrigins("http://localhost:5173"); // React 앱의 URL 허용
-    }
-
-    // WebSocket 핸들러 정의
-    public WebSocketHandler WebSocketHandler() {
-        return new WebSocketHandler();
     }
 }
 

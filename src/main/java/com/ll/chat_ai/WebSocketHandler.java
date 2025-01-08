@@ -5,10 +5,12 @@ import com.ll.chat_ai.chatting.dto.WebSocketDTO;
 import com.ll.chat_ai.chatting.dto.chattingDTO;
 import com.ll.chat_ai.chatting.entity.chattingEntity;
 import com.ll.chat_ai.chatting.service.chattingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.Date;
@@ -29,10 +31,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 }*/
 
 @Component
+@EnableWebSocket
+@RequiredArgsConstructor
 public class WebSocketHandler extends TextWebSocketHandler {
 
     @Autowired
-    private chattingService chattingService;
+    private final chattingService ChattingService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -59,7 +63,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
         //save가 채팅방에 종속되어 잘 일어나는지 확인해야함.
         //docker 켜두고 로그 봐가면서 할것. >> 저장이 어떤 쿼리로 이뤄지는지.
-        chattingEntity savedChatMessage = chattingService.createMessage(webSocketDTO.getRoomId(),req);
+        chattingEntity savedChatMessage = ChattingService.createMessage(webSocketDTO.getRoomId(),req);
         Map<String, Object> responseMessage = new HashMap<>();
         responseMessage.put("id", UUID.randomUUID().toString()); // 고유 ID 생성
         responseMessage.put("roomId", webSocketDTO.getRoomId());

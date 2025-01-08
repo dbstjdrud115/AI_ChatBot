@@ -92,7 +92,8 @@ public class apiV1ChattingController {
         if(chatMsg != null) {
             return resultData.of("200", "메시지 입력성공", chatMsg);
         }else{
-            return resultData.of("400", "메시지 입력실패");
+            return null;
+            //return resultData.of("400", "메시지 입력실패");
         }
     }
 

@@ -2,6 +2,8 @@ package com.ll.chat_ai.common.initData;
 
 import com.ll.chat_ai.chatting.entity.chattingRoomEntity;
 import com.ll.chat_ai.chatting.service.chattingService;
+import com.ll.chat_ai.member.entity.Member;
+import com.ll.chat_ai.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +21,7 @@ public class initDataSetting {
     private Environment environment;
 
     @Bean
-    public ApplicationRunner initNotProd(chattingService chattingService) {
+    public ApplicationRunner initNotProd(chattingService chattingService, MemberService memberService) {
         return args -> {
 
             String[] activeProfiles = environment.getActiveProfiles();
@@ -31,7 +33,11 @@ public class initDataSetting {
                 String numAsString = String.valueOf(num);
                 chattingService.makeInitMessage(chattingRoomEntity1, "사용자1", numAsString);
             });
-            System.out.println("Not Prod");
+
+            Member member1 = memberService.join("user1", "1234").getData();
+            Member member2 = memberService.join("user2", "1234").getData();
+            Member member3 = memberService.join("user3", "1234").getData();
+
         };
     }
 
