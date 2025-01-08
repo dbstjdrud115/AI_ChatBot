@@ -1,5 +1,6 @@
 package com.ll.chat_ai.chatting.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ll.chat_ai.common.entity.baseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -22,6 +23,7 @@ public class chattingRoomEntity extends baseEntity {
 
     //채팅방 제목 및, 채팅메시지 리스트
     @OneToMany
+    @JsonIgnore
     private List<chattingEntity> chattingEntityList;
     private String name;
 

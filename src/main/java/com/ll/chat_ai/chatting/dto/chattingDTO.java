@@ -28,13 +28,4 @@ public class chattingDTO {
     private final LocalDateTime createdDate;
     private final LocalDateTime modifiedDate;
 
-
-    //DTO와 Entity간 치환을 위해 설정
-  /*  public chattingDTO(chattingEntity chattingEntity) {
-        this.id = chattingEntity.getId();
-        this.content = chattingEntity.getContent();
-        this.writerName = chattingEntity.getWriterName();
-        this.createdDate = chattingEntity.getCreateDate();
-        this.modifiedDate = chattingEntity.getModifyDate();
-    }*/
 }
