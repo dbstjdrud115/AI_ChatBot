@@ -10,71 +10,17 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    @Autowired // WebSocketHandler를 주입받음
+    @Autowired
     private WebSocketHandler webSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, "/ws/chat/{roomId}") // 주입받은 핸들러 사용
+        /*
+        *  WebSocket은 연결시 요청의 쿼리스트링을 고려하지 않는다.
+        *  그래서 ?afterMessageId부분이 paths에 기입되어있지 않더라도,
+        *   url 부분만 고려하여 ws 연결을 성사시킨다.
+        */
+        registry.addHandler(webSocketHandler, "/ws/chat/{roomId}/messages")
                 .setAllowedOrigins("http://localhost:5173"); // React 앱의 URL 허용
     }
 }
-
-
-/*
-package com.ll.chat_ai;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
-import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
-import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-@Configuration
-@EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        //registry.addEndpoint("/ws").withSockJS();
-        registry.addEndpoint("/ws").setAllowedOrigins("http://localhost:5173").withSockJS();
-    }
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/topic");
-        registry.setApplicationDestinationPrefixes("/app");
-    }
-
-    */
-/*//*
-/WebSocket에서 사용하는 방식.
-        messagingTemplate.convertAndSend("/topic/chat/writeMessage", new writeMessageResponse(ch));
-
-
-
-    // 서버설정
-    기존 registry.addEndpoint("/ws").withSockJS();
-    현재 registry.addEndpoint("/ws").withSockJS();
-
-    // 프론트 설정
-    기존 const socket = new SockJS("/ws");
-    기존 const stompClient = Stomp.over(socket);
-
-    현재 const ws = new WebSocket(`ws://localhost:8070/ws`)
-
-    //연결시 req url
-    기존 코드 : ws://localhost:8090/ws/917/lx3w2wrw/websocket
-    현재 작업 : ws://localhost:8070/ws
-
-
-    <!--SSE와 비슷하게 WS 연결용 상태를 설정한다. -->
-            stompClient.connect({}, function (frame) {
-        console.log("Connected: " + frame);
-        stompClient.subscribe(`/topic/chat/writeMessage`, function (data) {
-            console.log(data.body)
-            Chat__loadMore();
-        });
-
-
-
-        *//*
-
-    }*/

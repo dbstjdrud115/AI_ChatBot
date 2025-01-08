@@ -27,7 +27,7 @@ public class chattingService {
     }
 
 
-    public List<chattingRoomEntity> getChattingList() {
+    public List<chattingRoomEntity> getChattingRoomList() {
         return chattingRoomRepository.findAll();
     }
 
@@ -64,12 +64,13 @@ public class chattingService {
         }
     }
 
-    public chattingEntity createMessage(long chatRoomId, chattingDTO req) {
+    public chattingEntity createMessage(long roomId, chattingDTO req) {
 
         //1. 방 있는지 체크 chatRoomOptional
         //2. 방 있으면 메시지 Entity에 값 세팅.
         //3. 세팅값으로 저장
-        Optional<chattingRoomEntity> chatRoomOptional = chattingRoomRepository.findById(chatRoomId);
+        Optional<chattingRoomEntity> chatRoomOptional = chattingRoomRepository.findById(roomId);
+
         if (chatRoomOptional.isPresent()) {
             chattingEntity chatMsg = chattingEntity.builder()
                     .chattingRoomEntity(chatRoomOptional.get())
@@ -82,18 +83,4 @@ public class chattingService {
             return null;
         }
     }
-
-    /*    public ArticleDTO getOneArticle(Long id) {
-        *//*
-         * 전체 조회인 getArticleList은 Optional을 사용하지 않는데,
-         * 단건 조회인 getOneArticle은  Optional을 사용하는 이유는,
-         * 전자의 반환값인 List는 값이 없더라도 빈 데이터콜렉션을 반환하지만,
-         * 후자는 값이 없을경우 Optional.empty()를 반환하기 떄문이다.
-         *  따라서, 값이 없는 경우에 대한 조치사안을 작성해두어야 한다.
-         * *//*
-        Optional<ArticleEntity> getOneArticle = articleRepository.findById(id);
-        return getOneArticle.map(result->new ArticleDTO(result)).orElse(null);
-    }*/
-
-
 }

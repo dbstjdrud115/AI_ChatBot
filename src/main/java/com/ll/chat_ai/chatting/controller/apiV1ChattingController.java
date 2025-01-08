@@ -48,8 +48,20 @@ public class apiV1ChattingController {
     //채팅방 목록조회
     @GetMapping("/rooms")
     public resultData getChattingRoomList(){
-        List<chattingRoomEntity> chattingRoomList = chattingService.getChattingList();
+        List<chattingRoomEntity> chattingRoomList = chattingService.getChattingRoomList();
         return resultData.of("200", "조회결과", chattingRoomList);
+    }
+
+    //채팅방 생성
+    @PostMapping("/rooms")
+    public resultData<chattingDTO> createRoom(@Validated(CreateRoom.class) @RequestBody chattingDTO req){
+        try {
+            chattingService.createRoom(req);
+            return resultData.of("200", "채팅방 생성 성공", req);
+        } catch (Exception e) {
+            log.error("에러발생", e);
+            return resultData.of("400", "채팅방 생성 실패", req);
+        }
     }
 
     //채팅방 한 건 조회
@@ -67,28 +79,10 @@ public class apiV1ChattingController {
         return resultData.of("200", "채팅방 메시지 회신", chattingList);
     }
 
-
-    /* 채팅방 생성
-       messageDTO를 따로 만들기 싫어서, chattingDTO에 다 때려박아넣었다.
-       문제는 호출마다 valid체크를 서로 달리해야 하기에, 그룹단위로 묶을 수 있도록
-        CreateMessage, createRoom이란 Interface를 만들고, 그룹단위로 valid를 처리하게 하였다.
-     */
-    @PostMapping("/rooms")
-    public resultData<chattingDTO> createRoom(@Validated(CreateRoom.class) @RequestBody chattingDTO req){
-        try {
-            chattingService.createRoom(req);
-            return resultData.of("200", "채팅방 생성 성공", req);
-        } catch (Exception e) {
-            log.error("에러발생", e);
-            return resultData.of("400", "채팅방 생성 실패", req);
-        }
-    }
-
-
     //채팅방 내에서 메시지 입력
-    @PostMapping("/rooms/{chatRoomId}/message")
-    public resultData createMessage(@PathVariable long chatRoomId, @Validated(CreateMessage.class) @RequestBody chattingDTO req){
-        chattingEntity chatMsg = chattingService.createMessage(chatRoomId,req);
+    @PostMapping("/rooms/{roomId}/message")
+    public resultData createMessage(@PathVariable long roomId, @Validated(CreateMessage.class) @RequestBody chattingDTO req){
+        chattingEntity chatMsg = chattingService.createMessage(roomId,req);
         if(chatMsg != null) {
             return resultData.of("200", "메시지 입력성공", chatMsg);
         }else{
