@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ArticleCommentService {
-
     final ArticleCommentRepository articleCommentRepository;
 
     public List<ArticleComment> findByAuthorId(Long id) {

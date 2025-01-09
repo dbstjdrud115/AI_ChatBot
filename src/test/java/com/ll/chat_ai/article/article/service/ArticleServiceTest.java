@@ -38,9 +38,9 @@ public class ArticleServiceTest {
     @DisplayName("글 쓰기")
     @Test
     void t1() {
-
-        resultData<Article> writeRs = articleService.write(1L, "제목", "내용");
+        resultData<Article> writeRs = articleService.write(1L, "제목", "내용"); // 1은 회원번호
         Article article = writeRs.getData();
+
         assertThat(article.getId()).isGreaterThan(0L);
     }
 
@@ -55,9 +55,9 @@ public class ArticleServiceTest {
     @Test
     void t3() {
         Article article = articleService.findById(1L).get();
-        Member author = article.getMember();
+        Member author = article.getAuthor();
 
-        assertThat(author.getAuthor()).isEqualTo("user1");
+        assertThat(author.getUsername()).isEqualTo("user1");
     }
 
     //테스트는 성공했다고 하는데,
@@ -134,9 +134,6 @@ public class ArticleServiceTest {
     /*10~13번 테스트의 경우 코드가 많이 꼬여있어서 차분히 정리해야한다. */
     @DisplayName("1번 게시물 toString")
     @Test
-    //ToString은 모든 필드를 출력하는 문자열을 반환하는데,
-    //Article클래스가 Member, AritcleComment와 양방향 관계를 맺다보니,
-    //참조형 무한반복의 에러가 생긴다.
     void t10() {
         Article article1 = articleService.findById(1L).get();
         System.out.println(article1);
@@ -146,6 +143,7 @@ public class ArticleServiceTest {
     @Test
     void t11() {
         List<ArticleComment> articleComments = articleCommentService.findByAuthorId(1L);
+
         assertThat(articleComments.size()).isGreaterThan(0);
     }
 
@@ -161,6 +159,7 @@ public class ArticleServiceTest {
     @Test
     void t13() {
         List<ArticleTag> articleTags = articleTagService.findByAuthorUsername("user1");
+
         assertThat(articleTags.size()).isGreaterThan(0);
     }
 }

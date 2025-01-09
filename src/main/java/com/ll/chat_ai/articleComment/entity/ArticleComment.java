@@ -17,16 +17,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString(callSuper = true)
 public class ArticleComment extends baseEntity {
-
-    /*
-    *  댓글은 게시물에 달리는 고로, 게시물에 의존한다.
-    * 허나 한편으로는, 그 댓글을 올린 작성자에 의존한다.
-    * */
+    private String body;
     @ManyToOne(fetch = FetchType.LAZY)
     private Article article;
     @ManyToOne(fetch = FetchType.LAZY)
     private Member author;
-
-    //댓글내용
-    private String body;
 }

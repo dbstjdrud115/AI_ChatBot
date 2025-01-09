@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ArticleTagRepository extends JpaRepository<ArticleTag, Long> {
-    List<ArticleTag> findByArticle_authorId(Long id);
-    List<ArticleTag> findByArticle_authorUsername(String user);
+    List<ArticleTag> findByArticle_authorId(Long authorId);
+
+    List<ArticleTag> findByArticle_authorUsername(String authorUsername);
 }
