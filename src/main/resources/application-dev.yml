@@ -7,7 +7,3 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/chat_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul #chat_dev는 database명
     username: root
     password: riskmgt951753@
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true

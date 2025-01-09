@@ -17,18 +17,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.net.URI;
 import java.util.*;
 
-/*
-public class WebSocketHandler extends TextWebSocketHandler {
-
-    @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        // 클라이언트로부터 받은 메시지 처리
-        System.out.println("Received message: " + message.getPayload());
-        System.out.println("연결성공 handleTextMessage");
-        session.sendMessage(new TextMessage("Echo: " + message.getPayload()));
-    }
-}*/
-
 @Component
 @EnableWebSocket
 @RequiredArgsConstructor
@@ -87,6 +75,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
         return segments[segments.length - 2];
     }
 
+    //storm의 subscribe가 write에서 수행되듯이.
+    //사용자가 입력시 handleTextMessage가 실행된다.
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 

@@ -8,9 +8,12 @@ import com.ll.chat_ai.member.entity.Member;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+// import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
+//@org.springframework.transaction.annotation.Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
@@ -38,10 +41,24 @@ public class ArticleService {
     public void modify(Article article, String modifiedTitle, String modifiedBody) {
         article.setTitle(modifiedTitle);
         article.setBody(modifiedBody);
-        articleRepository.save(article);
+
+        /*
+        * 클래스 전체로 readOnly를 걸어두고,
+        * 개별 cud에 transaction을 건 다음,
+        * Entity.set을 하면 변화를 감지하고, 알아서
+        *
+        *
+        * */
+        //트랜젝션 걸려있는경우에서 set을 하면, 값 변화를 감지하고
+        //jpa에서 알아서 데이터 작업을해준다는것 같다.
+      //  articleRepository.save(article);
     }
 
     public void modifyComment(ArticleComment comment, String body) {
         comment.setBody(body);
+    }
+
+    public List<Article> findAll() {
+        return articleRepository.findAll();
     }
 }

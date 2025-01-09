@@ -6,7 +6,17 @@ spring:
     include: secret
   logging:
     level:
-      com.ll.chat_ai: DEBUG
+      com.ll.chatApp: DEBUG
       org.hibernate.orm.jdbc.bind: TRACE
       org.hibernate.orm.jdbc.extract: TRACE
       org.springframework.transaction.interceptor: TRACE
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        default_batch_fetch_size: 100 # 이것을 설정시 N+1이 아닌, 한번에 Join조회가 가능하다.
+                                      # 단, 기본이 EAGER인 ManyToOne대상들은 Lazy로 변경하는 설정을 추가해야함.

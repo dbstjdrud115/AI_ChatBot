@@ -21,7 +21,9 @@ import static lombok.AccessLevel.PROTECTED;
 @SuperBuilder // 상속된 클래스에서 빌더 패턴 사용 가능
 @EntityListeners(AuditingEntityListener.class) // JPA Auditing 기능 사용
 @ToString // toString 메서드 자동 생성
-@EqualsAndHashCode // equals와 hashCode 메서드 자동 생성
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)//JPA에서 동일 엔티티 조회시 고유키값
+                                                 //ID만 참고하여 일치할경우에 다른 컬럼들의 일치여부를
+//검증하지 않아서 더 효율적이라는데... 어차피 1차해시내부에서 ID기준으로 검증하지 않나?
 public class baseEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
