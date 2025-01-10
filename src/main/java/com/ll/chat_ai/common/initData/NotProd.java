@@ -2,6 +2,8 @@ package com.ll.chat_ai.common.initData;
 
 import com.ll.chat_ai.article.entity.Article;
 import com.ll.chat_ai.article.service.ArticleService;
+import com.ll.chat_ai.chatting.entity.chattingRoomEntity;
+import com.ll.chat_ai.chatting.service.chattingService;
 import com.ll.chat_ai.member.entity.Member;
 import com.ll.chat_ai.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class NotProd {
     private NotProd self;
     private final MemberService memberService;
     private final ArticleService articleService;
+    private final chattingService ChattingService;
 
     @Bean
     public ApplicationRunner initNotProdData() {
@@ -34,6 +37,15 @@ public class NotProd {
 
     @Transactional
     public void work1() {
+
+        chattingRoomEntity chattingRoomEntity1 =  ChattingService.makeInitData("공부");
+        chattingRoomEntity chattingRoomEntity2 =  ChattingService.makeInitData("식사");
+        chattingRoomEntity chattingRoomEntity3 =  ChattingService.makeInitData("휴식");
+        IntStream.rangeClosed(1, 5).forEach(num -> {
+            String numAsString = String.valueOf(num);
+            ChattingService.makeInitMessage(chattingRoomEntity1, "사용자1", numAsString);
+        });
+
         Member member1 = memberService.join("user1", "1234").getData();
         Member member2 = memberService.join("user2", "1234").getData();
         Member member3 = memberService.join("user3", "1234").getData();

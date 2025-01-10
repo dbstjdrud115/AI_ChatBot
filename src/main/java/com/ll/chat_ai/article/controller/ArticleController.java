@@ -2,7 +2,6 @@ package com.ll.chat_ai.article.controller;
 
 import com.ll.chat_ai.article.entity.Article;
 import com.ll.chat_ai.article.service.ArticleService;
-import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/article")
 @RequiredArgsConstructor
-@Slf4j
+@lombok.extern.slf4j.Slf4j
 public class ArticleController {
     private final ArticleService articleService;
 

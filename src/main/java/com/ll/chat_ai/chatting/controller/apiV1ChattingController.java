@@ -8,8 +8,8 @@ import com.ll.chat_ai.chatting.service.chattingService;
 import com.ll.chat_ai.common.CreateMessage;
 import com.ll.chat_ai.common.CreateRoom;
 import com.ll.chat_ai.common.rsData.resultData;
-import groovy.util.logging.Slf4j;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@lombok.extern.slf4j.Slf4j
 @Controller
 @RestController
 @RequestMapping("/api/v1/chat")
